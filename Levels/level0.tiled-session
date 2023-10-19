@@ -1,4 +1,8 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "",
     "expandedProjectPaths": [
     ],
@@ -21,11 +25,11 @@
             }
         },
         "level0/level0.tmx": {
-            "scale": 2.112265625,
-            "selectedLayer": 0,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 319.7987942449236,
-                "y": 184.6358693642046
+                "x": 429.99999999999994,
+                "y": 175.33333333333331
             }
         },
         "terrain_grass_tiles.tsx": {
@@ -34,12 +38,16 @@
     },
     "last.exportedFilePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Levels/level0/data",
     "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/terrain/grass",
+    "map.height": 15,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 40,
     "openFiles": [
     ],
     "project": "level0.tiled-project",
     "recentFiles": [
         "level0/level0.tmx",
         "level0.tmx"
-    ]
+    ],
+    "tileset.lastUsedFormat": "tsx"
 }

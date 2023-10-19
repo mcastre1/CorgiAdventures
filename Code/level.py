@@ -26,7 +26,7 @@ class Level():
                     y = row_index * tile_size
 
                     if type == 'terrain':
-                        terrain_tiles_list = import_cut_tileset('./Graphics/terrain/grass/terrain_grass_tiles.png')
+                        terrain_tiles_list = import_cut_tileset('./Graphics/terrain/grass/32terrain_grass_tiles.png')
                         tile_surface = terrain_tiles_list[int(id)]
                         sprite = StaticTile(tile_size, x, y, tile_surface)
 

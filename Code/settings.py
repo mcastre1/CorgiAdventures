@@ -1,4 +1,4 @@
-screen_width = 320
-screen_height = 240
+screen_width = 800
+screen_height = 480
 
-tile_size = 16
+tile_size = 32
