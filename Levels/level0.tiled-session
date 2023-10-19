@@ -16,6 +16,27 @@
                 "y": 349.3878758738025
             }
         },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/coin_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/crates.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/enemy_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/grass_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/palms.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/player_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/tilesets/terrain_tiles.tsx": {
+            "scaleInDock": 1
+        },
         "level0.tmx": {
             "scale": 1,
             "selectedLayer": 0,
@@ -32,12 +53,16 @@
                 "y": 235.33333333333331
             }
         },
+        "level0/terrain_grass_tiles.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
         "terrain_grass_tiles.tsx": {
             "scaleInDock": 4
         }
     },
     "last.exportedFilePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Levels/level0/data",
-    "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/terrain/grass",
+    "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/decoration/grass",
     "map.height": 15,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
@@ -46,7 +71,9 @@
     ],
     "project": "level0.tiled-project",
     "recentFiles": [
+        "level0/terrain_grass_tiles.tsx",
         "level0/level0.tmx",
+        "C:/Users/Miguel/Desktop/PygamePlatformer/levels/level_data/level_0.tmx",
         "level0.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"

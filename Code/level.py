@@ -10,8 +10,14 @@ class Level():
         self.world_shift = -1
 
         # Terrain tiles
+        # Passing a path to import_csv_layout function
         terrain_layout = import_csv_layout(self.level_data['terrain'])
+        # Create a pygame sprite group by passing in the csv list and the type
         self.terrain_sprites = self.create_sprite_group(terrain_layout, 'terrain')
+
+        # Grass
+        grass_layout = import_csv_layout(self.level_data['grass'])
+        self.grass_sprites = self.create_sprite_group(grass_layout, 'grass')
 
 
         self.run()
@@ -30,6 +36,11 @@ class Level():
                         tile_surface = terrain_tiles_list[int(id)]
                         sprite = StaticTile(tile_size, x, y, tile_surface)
 
+                    if type == 'grass':
+                        grass_tile_list = import_cut_tileset('./Graphics/decoration/grass/grass_deco_tiles.png')
+                        tile_surface = grass_tile_list[int(id)]
+                        sprite = StaticTile(tile_size, x, y, tile_surface)
+
                     sprite_group.add(sprite)
 
         return sprite_group
@@ -39,5 +50,9 @@ class Level():
 
     def run(self):
         self.display_surface.fill('black')
+
         self.terrain_sprites.update(self.world_shift)
         self.terrain_sprites.draw(self.display_surface)
+
+        self.grass_sprites.update(self.world_shift)
+        self.grass_sprites.draw(self.display_surface)
