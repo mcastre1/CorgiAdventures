@@ -6,8 +6,9 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = (pos))
 
         self.speed = 5
-        self.y_velocity = 0
-        self.x_velocity = 0
+        self.direction = pygame.math.Vector2(0,0) # This will take care of x and y velocity
+        self.jump_speed = -16
+        self.gravity = 0.8
 
         # status
         self.status = 'idle'
@@ -18,24 +19,30 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT]:
-            self.x_velocity = -self.speed
+            self.direction.x = -self.speed
             self.facing_right = False
         elif keys[pygame.K_RIGHT]:
-            self.x_velocity = self.speed
+            self.direction.x = self.speed
             self.facing_right = True
         else:
-            self.x_velocity = 0
+            self.direction.x = 0
 
         if keys[pygame.K_SPACE]:
             self.jump()
+            print("jump")
 
     def jump(self):
-        pass
+        self.direction.y = self.jump_speed
 
     def update_pos(self, shift):
-        self.rect.x += shift + self.x_velocity
+        self.rect.x += shift + self.direction.x
+        self.rect.y += self.direction.y
+
+    def apply_gravity(self):
+        self.direction.y += self.gravity
 
     def update(self, shift):
         self.input()
+        self.apply_gravity()
         self.update_pos(shift)
 
