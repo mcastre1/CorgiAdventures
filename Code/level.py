@@ -19,6 +19,11 @@ class Level():
         grass_layout = import_csv_layout(self.level_data['grass'])
         self.grass_sprites = self.create_sprite_group(grass_layout, 'grass')
 
+        # Player
+        player_layout = import_csv_layout(self.level_data['player'])
+        self.player_sprite = self.create_sprite_group(player_layout, 'player')
+        #self.player_sprite = pygame.sprite.GroupSingle()
+
 
         self.run()
 
@@ -49,6 +54,7 @@ class Level():
 
 
     def run(self):
+        print(self.player_sprite)
         self.display_surface.fill('black')
 
         self.terrain_sprites.update(self.world_shift)
@@ -56,3 +62,5 @@ class Level():
 
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
+
+        self.player_sprite.draw(self.display_surface)
