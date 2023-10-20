@@ -2,6 +2,7 @@ import pygame
 from support import import_csv_layout, import_cut_tileset
 from settings import tile_size
 from tiles import StaticTile
+from player import Player
 
 class Level():
     def __init__(self, display_surface, level_data):
@@ -19,13 +20,22 @@ class Level():
         grass_layout = import_csv_layout(self.level_data['grass'])
         self.grass_sprites = self.create_sprite_group(grass_layout, 'grass')
 
-        # Player
+        # Player setup
         player_layout = import_csv_layout(self.level_data['player'])
-        self.player_sprite = self.create_sprite_group(player_layout, 'player')
-        #self.player_sprite = pygame.sprite.GroupSingle()
-
+        self.player_sprite = pygame.sprite.GroupSingle()
+        self.player_setup(player_layout)
 
         self.run()
+
+    def player_setup(self, layout):
+        for row_index, row in enumerate(layout):
+            for col_index, id in enumerate(row):
+                y = row_index * tile_size   # These two y and x are coordinates for the topleft on a sprite
+                x = col_index * tile_size
+
+                if id == '0':
+                    self.player_sprite.add(Player((x, y), self.display_surface))
+
 
     def create_sprite_group(self, layout, type):
         sprite_group = pygame.sprite.Group()
@@ -54,7 +64,6 @@ class Level():
 
 
     def run(self):
-        print(self.player_sprite)
         self.display_surface.fill('black')
 
         self.terrain_sprites.update(self.world_shift)
@@ -63,4 +72,5 @@ class Level():
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
 
+        self.player_sprite.update(self.world_shift)
         self.player_sprite.draw(self.display_surface)
