@@ -1,6 +1,6 @@
 import pygame
 from support import import_csv_layout, import_cut_tileset
-from settings import tile_size
+from settings import tile_size, screen_width
 from tiles import StaticTile
 from player import Player
 
@@ -86,11 +86,14 @@ class Level():
         if player.on_ceiling and player.direction > 0:
             player.on_ceiling = False
 
+    # Takes care of horizontal movement and collisions on the x axis
     def horizontal_movement_collision(self):
+        # Movement
         player = self.player_sprite.sprite
-        player.rect.x += player.direction.x + self.world_shift
-        collidable_sprites = self.terrain_sprites.sprites()
+        player.rect.x += player.direction.x * player.speed
 
+        # collisions
+        collidable_sprites = self.terrain_sprites.sprites()
         for sprite in collidable_sprites:
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0:
@@ -98,9 +101,32 @@ class Level():
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
 
+    def scroll_x(self):
+        player = self.player_sprite.sprite
+        player_x = player.rect.centerx
+
+        if player_x < (screen_width * .25) and player.direction.x < 0:
+            self.world_shift = 5
+            player.speed = 0
+        elif player_x > (screen_width * .75) and player.direction.x > 0:
+            self.world_shift = -5
+            player.speed = 0
+        else:
+            self.world_shift = 0
+            player.speed = 5
+
 
     def run(self):
         self.display_surface.fill('black')
+
+        # player
+        self.player_sprite.update(self.world_shift)
+        self.vertical_movement_collisions()
+        self.horizontal_movement_collision()
+
+        self.scroll_x()        
+
+        self.player_sprite.draw(self.display_surface)
 
         self.terrain_sprites.update(self.world_shift)
         self.terrain_sprites.draw(self.display_surface)
@@ -108,11 +134,6 @@ class Level():
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
 
-        # player
-        self.player_sprite.update(self.world_shift)
-        self.vertical_movement_collisions()
-        self.horizontal_movement_collision()
-
-        self.player_sprite.draw(self.display_surface)
+        
 
 

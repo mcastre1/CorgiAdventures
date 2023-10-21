@@ -7,7 +7,7 @@ class Player(pygame.sprite.Sprite):
 
         self.speed = 5
         self.direction = pygame.math.Vector2(0,0) # This will take care of x and y velocity
-        self.jump_speed = -16
+        self.jump_speed = -8
         self.gravity = 0.8
 
         # status
@@ -21,16 +21,25 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT]:
-            self.direction.x = -self.speed
+            self.direction.x = -1
             self.facing_right = False
         elif keys[pygame.K_RIGHT]:
-            self.direction.x = self.speed
+            self.direction.x = 1
             self.facing_right = True
         else:
             self.direction.x = 0
 
         if keys[pygame.K_SPACE]:
             self.jump()
+
+    def animate(self):
+        image = self.image
+
+        if self.facing_right:
+            self.image = self.image
+        else:
+            flipped_image = pygame.transform.flip(image, True, False)
+            self.image = flipped_image
 
     def jump(self):
         self.direction.y = self.jump_speed
@@ -41,4 +50,5 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, shift):
         self.input()
+        self.animate()
 
