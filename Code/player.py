@@ -13,6 +13,8 @@ class Player(pygame.sprite.Sprite):
         # status
         self.status = 'idle'
         self.facing_right = False
+        self.on_ground = True
+        self.on_ceiling = False
 
 
     def input(self):
@@ -29,20 +31,14 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_SPACE]:
             self.jump()
-            print("jump")
 
     def jump(self):
         self.direction.y = self.jump_speed
 
-    def update_pos(self, shift):
-        self.rect.x += shift + self.direction.x
-        self.rect.y += self.direction.y
-
     def apply_gravity(self):
         self.direction.y += self.gravity
+        self.rect.y += self.direction.y
 
     def update(self, shift):
         self.input()
-        self.apply_gravity()
-        self.update_pos(shift)
 

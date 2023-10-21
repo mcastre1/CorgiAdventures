@@ -8,7 +8,7 @@ class Level():
     def __init__(self, display_surface, level_data):
         self.display_surface = display_surface
         self.level_data = level_data
-        self.world_shift = -1
+        self.world_shift = 0
 
         # Terrain tiles
         # Passing a path to import_csv_layout function
@@ -59,8 +59,44 @@ class Level():
                     sprite_group.add(sprite)
 
         return sprite_group
+    
+    # This is where we check for vertical collisions and apply gravity to character
+    def vertical_movement_collisions(self):
+        player = self.player_sprite.sprite
+        player.apply_gravity()
+        
+        # These are those tiles/sprites that will be unpasable/collidable
+        # Add more by concatinating more sprites at the end
+        collidable_sprites = self.terrain_sprites.sprites()
 
+        for sprite in collidable_sprites:
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.y > 0:
+                    player.rect.bottom = sprite.rect.top
+                    player.on_ground = True
+                elif player.direction.y < 0:
+                    player.rect.top = sprite.rect.bottom
+                    player.on_ceiling = True
 
+                player.direction.y = 0
+        
+        # This is so player doesnt get stuck on the ground or ceiling.
+        if player.on_ground and (player.direction.y < 0 or player.direction.y > 0):
+            player.on_ground = False
+        if player.on_ceiling and player.direction > 0:
+            player.on_ceiling = False
+
+    def horizontal_movement_collision(self):
+        player = self.player_sprite.sprite
+        player.rect.x += player.direction.x + self.world_shift
+        collidable_sprites = self.terrain_sprites.sprites()
+
+        for sprite in collidable_sprites:
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
 
 
     def run(self):
@@ -72,5 +108,11 @@ class Level():
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
 
+        # player
         self.player_sprite.update(self.world_shift)
+        self.vertical_movement_collisions()
+        self.horizontal_movement_collision()
+
         self.player_sprite.draw(self.display_surface)
+
+
