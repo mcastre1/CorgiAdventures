@@ -1,8 +1,10 @@
 import pygame
+from support import import_cut_tileset
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, display_surface):
         super().__init__()
-        self.image = pygame.image.load('./Graphics/player/idle/idle_0.png')
+        self.image = pygame.image.load('./Graphics/player/idle/idle_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = (pos))
 
         self.speed = 5
@@ -15,6 +17,15 @@ class Player(pygame.sprite.Sprite):
         self.facing_right = False
         self.on_ground = True
         self.on_ceiling = False
+
+        #animations
+        self.animations = {'idle':[]}
+        self.sprite_index = 0
+        self.sprite_speed = 0.1
+        
+        # get animations
+        for key in self.animations.keys():
+            self.animations[key] = import_cut_tileset(f'./Graphics/player/{key}/{key}.png')
 
 
     def input(self):
@@ -33,10 +44,16 @@ class Player(pygame.sprite.Sprite):
             self.jump()
 
     def animate(self):
-        image = self.image
+        #image = pygame.image.load('./Graphics/player/idle/idle_0.png').convert_alpha()
 
+        self.sprite_index += self.sprite_speed
+
+        if self.sprite_index >= len(self.animations[self.status]):
+            self.sprite_index = 0
+        image = self.animations[self.status][int(self.sprite_index)]
+        
         if self.facing_right:
-            self.image = self.image
+            self.image = image
         else:
             flipped_image = pygame.transform.flip(image, True, False)
             self.image = flipped_image
