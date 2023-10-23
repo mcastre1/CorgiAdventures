@@ -1,8 +1,10 @@
 import pygame
 from support import import_csv_layout, import_cut_tileset
-from settings import tile_size, screen_width
-from tiles import StaticTile
+from settings import tile_size, screen_width, screen_height
+from tiles import StaticTile, Cloud
 from player import Player
+from game_data import level_0
+from random import choice, randint
 
 class Level():
     def __init__(self, display_surface, level_data):
@@ -25,7 +27,26 @@ class Level():
         self.player_sprite = pygame.sprite.GroupSingle()
         self.player_setup(player_layout)
 
+        # Clouds
+        self.level_width_pixels = len(terrain_layout[0]) * tile_size
+        self.number_clouds = 20
+        self.cloud_sprites = [pygame.image.load('./Graphics/decoration/clouds/small.png')]
+        self.cloud_group = self.generate_clouds()
+        print(self.cloud_group)
+        
+
         self.run()
+
+    def generate_clouds(self):
+        group = pygame.sprite.Group()
+        max_x = self.level_width_pixels
+        max_y = int(screen_height/2.5)
+
+        for _ in range(self.number_clouds):
+            group.add(Cloud(tile_size, randint(0, max_x), randint(0, max_y), choice(self.cloud_sprites)))
+
+        return group
+
 
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):
@@ -83,7 +104,7 @@ class Level():
         # This is so player doesnt get stuck on the ground or ceiling.
         if player.on_ground and (player.direction.y < 0 or player.direction.y > 0):
             player.on_ground = False
-        if player.on_ceiling and player.direction > 0:
+        if player.on_ceiling and player.direction.y > 0:
             player.on_ceiling = False
 
     # Takes care of horizontal movement and collisions on the x axis
@@ -117,7 +138,19 @@ class Level():
 
 
     def run(self):
-        self.display_surface.fill('black')
+        self.display_surface.fill('grey')
+        
+        # clouds
+        self.cloud_group.update(self.world_shift)
+        self.cloud_group.draw(self.display_surface)
+        
+        # Terrain
+        self.terrain_sprites.update(self.world_shift)
+        self.terrain_sprites.draw(self.display_surface)
+
+        # Grass decoration
+        self.grass_sprites.update(self.world_shift)
+        self.grass_sprites.draw(self.display_surface)
 
         # player
         self.player_sprite.update(self.world_shift)
@@ -127,13 +160,5 @@ class Level():
         self.scroll_x()        
 
         self.player_sprite.draw(self.display_surface)
-
-        self.terrain_sprites.update(self.world_shift)
-        self.terrain_sprites.draw(self.display_surface)
-
-        self.grass_sprites.update(self.world_shift)
-        self.grass_sprites.draw(self.display_surface)
-
-        
 
 
