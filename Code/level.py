@@ -29,8 +29,9 @@ class Level():
 
         # Clouds
         self.level_width_pixels = len(terrain_layout[0]) * tile_size
-        self.number_clouds = 20
-        self.cloud_sprites = [pygame.image.load('./Graphics/decoration/clouds/small.png')]
+        self.number_clouds = 10
+        self.cloud_sprites = [pygame.image.load('./Graphics/decoration/clouds/small.png'),
+                              pygame.image.load('./Graphics/decoration/clouds/big.png')]
         self.cloud_group = self.generate_clouds()
         print(self.cloud_group)
         
@@ -138,7 +139,7 @@ class Level():
 
 
     def run(self):
-        self.display_surface.fill('grey')
+        self.display_surface.fill('blue')
         
         # clouds
         self.cloud_group.update(self.world_shift)
