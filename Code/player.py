@@ -9,7 +9,7 @@ class Player(pygame.sprite.Sprite):
 
         self.speed = 5
         self.direction = pygame.math.Vector2(0,0) # This will take care of x and y velocity
-        self.jump_speed = -8
+        self.jump_speed = -12
         self.gravity = 0.8
 
         # status
@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.direction.x = 0
 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.on_ground:
             self.jump()
 
     def animate(self):
@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         if self.sprite_index >= len(self.animations[self.status]):
             self.sprite_index = 0
         image = self.animations[self.status][int(self.sprite_index)]
-        
+
         if self.facing_right:
             self.image = image
         else:
@@ -65,7 +65,27 @@ class Player(pygame.sprite.Sprite):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
 
+    def get_status(self):
+        if self.direction.y < 0:
+            #self.status = 'jump'
+            print('jumping')
+        # This elif had to be converted into an int because the double 0.0 was making
+        # this branch true.
+        elif int(self.direction.y) > 0:
+            #self.status = 'fall'
+            print('falling')
+        else:
+            if self.direction.x > 0:
+                #self.status = 'run'
+                print('walk')
+            elif self.direction.x < 0:
+                #self.status = 'run'
+                print('walk')
+            else:
+                self.status = 'idle'
+
     def update(self, shift):
         self.input()
+        self.get_status()
         self.animate()
 
