@@ -7,7 +7,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load('./Graphics/player/idle/idle_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = (pos))
 
-        self.speed = 5
+        self.speed = .5
         self.direction = pygame.math.Vector2(0,0) # This will take care of x and y velocity
         self.jump_speed = -12
         self.gravity = 0.8
@@ -19,13 +19,15 @@ class Player(pygame.sprite.Sprite):
         self.on_ceiling = False
 
         #animations
-        self.animations = {'idle':[]}
+        self.animations = {'idle':[],
+                           'walk':[]}
         self.sprite_index = 0
         self.sprite_speed = 0.1
         
         # get animations
         for key in self.animations.keys():
             self.animations[key] = import_cut_tileset(f'./Graphics/player/{key}/{key}.png')
+            print(key)
 
 
     def input(self):
@@ -66,7 +68,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y
 
     def get_status(self):
-        if self.direction.y < 0:
+        if int(self.direction.y) < 0:
             #self.status = 'jump'
             print('jumping')
         # This elif had to be converted into an int because the double 0.0 was making
@@ -75,14 +77,16 @@ class Player(pygame.sprite.Sprite):
             #self.status = 'fall'
             print('falling')
         else:
-            if self.direction.x > 0:
-                #self.status = 'run'
-                print('walk')
-            elif self.direction.x < 0:
+            if int(self.direction.x) > 0:
+                self.status = 'walk'
+                self.sprite_speed = 0.2
+                #print('walk')
+            elif int(self.direction.x) < 0:
                 #self.status = 'run'
                 print('walk')
             else:
                 self.status = 'idle'
+                self.sprite_speed = 0.1
 
     def update(self, shift):
         self.input()
