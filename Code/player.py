@@ -77,14 +77,14 @@ class Player(pygame.sprite.Sprite):
             #self.status = 'fall'
             print('falling')
         else:
+            # This else branch checks whether we are walking right, left, or idle
             if int(self.direction.x) > 0:
                 self.status = 'walk'
                 self.sprite_speed = 0.2
-                #print('walk')
             elif int(self.direction.x) < 0:
-                #self.status = 'run'
-                print('walk')
-            else:
+                self.status = 'walk'
+                self.sprite_speed = 0.2
+            elif int(self.direction.x) == 0:
                 self.status = 'idle'
                 self.sprite_speed = 0.1
 
