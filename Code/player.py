@@ -4,6 +4,7 @@ from support import import_cut_tileset
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, display_surface):
         super().__init__()
+        self.display_surface = display_surface
         self.image = pygame.image.load('./Graphics/player/idle/idle_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = (pos))
 
@@ -17,6 +18,10 @@ class Player(pygame.sprite.Sprite):
         self.facing_right = False
         self.on_ground = True
         self.on_ceiling = False
+
+        # atts
+        self.max_health = 10
+        self.current_health = 10
 
         #animations
         self.animations = {'idle':[],
@@ -62,6 +67,7 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
+        self.current_health -= 1
 
     def apply_gravity(self):
         self.direction.y += self.gravity
@@ -88,8 +94,17 @@ class Player(pygame.sprite.Sprite):
                 self.status = 'idle'
                 self.sprite_speed = 0.1
 
+    def display_health(self):
+        max_rect = pygame.Rect(1, 2, 150, 20)
+        percentage_health = self.current_health/self.max_health
+        current_rect = pygame.Rect(3, 4, (max_rect.width*percentage_health )- 4, 16)
+        pygame.draw.rect(self.display_surface, 'black', max_rect, 2)
+        pygame.draw.rect(self.display_surface, 'red', current_rect)
+
+
     def update(self, shift):
         self.input()
         self.get_status()
         self.animate()
+        self.display_health()
 
