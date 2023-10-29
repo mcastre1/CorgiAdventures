@@ -46,6 +46,7 @@
             }
         },
         "level0/32terrain_grass_tiles.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 3,
             "scaleInEditor": 1
         },

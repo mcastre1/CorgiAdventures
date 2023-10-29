@@ -134,10 +134,10 @@ class Level():
         player = self.player_sprite.sprite
         player_x = player.rect.centerx
 
-        if player_x < (screen_width * .25) and player.direction.x < 0:
+        if player_x < (screen_width * .33) and player.direction.x < 0:
             self.world_shift = 5
             player.speed = 0
-        elif player_x > (screen_width * .75) and player.direction.x > 0:
+        elif player_x > (screen_width * .66) and player.direction.x > 0:
             self.world_shift = -5
             player.speed = 0
         else:
