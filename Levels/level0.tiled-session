@@ -72,6 +72,9 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "level0/small_bush.tsx": {
+            "dynamicWrapping": false
+        },
         "level0/terrain_grass_tiles.tsx": {
             "scaleInDock": 3,
             "scaleInEditor": 1
@@ -81,7 +84,7 @@
         }
     },
     "last.exportedFilePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Levels/level0/data",
-    "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/background",
+    "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/decoration/bushes",
     "map.height": 15,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
@@ -105,5 +108,5 @@
         "level0.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
-    "tileset.type": 1
+    "tileset.type": 0
 }

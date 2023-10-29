@@ -26,6 +26,10 @@ class Level():
         grass_layout = import_csv_layout(self.level_data['grass'])
         self.grass_sprites = self.create_sprite_group(grass_layout, 'grass')
 
+        # Bushes
+        bushes_layout = import_csv_layout(self.level_data['bush'])
+        self.bush_sprites = self.create_sprite_group(bushes_layout, 'bush')
+
         # Player setup
         player_layout = import_csv_layout(self.level_data['player'])
         self.player_sprite = pygame.sprite.GroupSingle()
@@ -79,6 +83,11 @@ class Level():
                     if type == 'grass':
                         grass_tile_list = import_cut_tileset('./Graphics/decoration/grass/grass_deco_tiles.png')
                         tile_surface = grass_tile_list[int(id)]
+                        sprite = StaticTile(tile_size, x, y, tile_surface)
+
+                    if type == 'bush':
+                        bush_tile = import_cut_tileset('./Graphics/decoration/bushes/small_bush.png')
+                        tile_surface = bush_tile[int(id)]
                         sprite = StaticTile(tile_size, x, y, tile_surface)
 
                     if type == 'background':
@@ -159,6 +168,10 @@ class Level():
         # Terrain
         self.terrain_sprites.update(self.world_shift)
         self.terrain_sprites.draw(self.display_surface)
+
+        # Bushes decoration
+        self.bush_sprites.update(self.world_shift)
+        self.bush_sprites.draw(self.display_surface)
 
         # Grass decoration
         self.grass_sprites.update(self.world_shift)
