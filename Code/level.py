@@ -99,7 +99,7 @@ class Level():
         collidable_sprites = self.terrain_sprites.sprites()
 
         for sprite in collidable_sprites:
-            if sprite.rect.colliderect(player.rect):
+            if player.rect.colliderect(sprite.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.on_ground = True
@@ -166,8 +166,9 @@ class Level():
 
         # player
         self.player_sprite.update(self.world_shift)
-        self.vertical_movement_collisions()
         self.horizontal_movement_collision()
+        self.vertical_movement_collisions()
+        
 
         self.scroll_x()        
 

@@ -76,12 +76,12 @@ class Player(pygame.sprite.Sprite):
     def get_status(self):
         if int(self.direction.y) < 0:
             #self.status = 'jump'
-            print('jumping')
+            print('jump')
         # This elif had to be converted into an int because the double 0.0 was making
         # this branch true.
         elif int(self.direction.y) > 0:
             #self.status = 'fall'
-            print('falling')
+            print('fall')
         else:
             # This else branch checks whether we are walking right, left, or idle
             if int(self.direction.x) > 0:
