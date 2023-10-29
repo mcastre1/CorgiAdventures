@@ -12,6 +12,10 @@ class Level():
         self.level_data = level_data
         self.world_shift = 0
 
+        # Background sprites
+        background_layout = import_csv_layout(self.level_data['background'])
+        self.background_sprites = self.create_sprite_group(background_layout, 'background')
+
         # Terrain tiles
         # Passing a path to import_csv_layout function
         terrain_layout = import_csv_layout(self.level_data['terrain'])
@@ -34,7 +38,6 @@ class Level():
                               pygame.image.load('./Graphics/decoration/clouds/big.png')]
         self.cloud_group = self.generate_clouds()
         print(self.cloud_group)
-        
 
         self.run()
 
@@ -77,6 +80,10 @@ class Level():
                         grass_tile_list = import_cut_tileset('./Graphics/decoration/grass/grass_deco_tiles.png')
                         tile_surface = grass_tile_list[int(id)]
                         sprite = StaticTile(tile_size, x, y, tile_surface)
+
+                    if type == 'background':
+                        background_image = pygame.image.load("./Graphics/background/id_1.png")
+                        sprite = StaticTile(tile_size, x, y - screen_height, background_image)
 
                     sprite_group.add(sprite)
 
@@ -140,6 +147,10 @@ class Level():
 
     def run(self):
         self.display_surface.fill('blue')
+
+        # background
+        self.background_sprites.update(self.world_shift)
+        self.background_sprites.draw(self.display_surface)
         
         # clouds
         self.cloud_group.update(self.world_shift)

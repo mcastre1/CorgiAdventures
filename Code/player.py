@@ -94,12 +94,18 @@ class Player(pygame.sprite.Sprite):
                 self.status = 'idle'
                 self.sprite_speed = 0.1
 
+    # Create 2 rects to display player health bar
     def display_health(self):
+        # This represents the health bar placeholder
         max_rect = pygame.Rect(1, 2, 150, 20)
+        # How much health we have left in percentage
         percentage_health = self.current_health/self.max_health
+        # Create a rectangle by multiplying the placeholder width by the percentage of health remaining
         current_rect = pygame.Rect(3, 4, (max_rect.width*percentage_health )- 4, 16)
-        pygame.draw.rect(self.display_surface, 'black', max_rect, 2)
-        pygame.draw.rect(self.display_surface, 'red', current_rect)
+
+        # Draw both rectangles to the passed in display surface
+        pygame.draw.rect(self.display_surface, 'black', max_rect, 2, 3)
+        pygame.draw.rect(self.display_surface, (198, 47, 39), current_rect, 0, 2)
 
 
     def update(self, shift):

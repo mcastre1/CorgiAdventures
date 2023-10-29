@@ -49,6 +49,9 @@
             "scaleInDock": 3,
             "scaleInEditor": 1
         },
+        "level0/blue_sky_gradient.tsx": {
+            "dynamicWrapping": true
+        },
         "level0/grass_deco_tiles.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -74,7 +77,7 @@
         }
     },
     "last.exportedFilePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Levels/level0/data",
-    "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/player/idle",
+    "last.imagePath": "C:/Users/Miguel/Desktop/CorgiAdventures/Graphics/background",
     "map.height": 15,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
@@ -95,5 +98,6 @@
         "C:/Users/Miguel/Desktop/PygamePlatformer/levels/level_data/level_0.tmx",
         "level0.tmx"
     ],
-    "tileset.lastUsedFormat": "tsx"
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
 }
