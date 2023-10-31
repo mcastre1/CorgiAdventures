@@ -12,12 +12,14 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0,0) # This will take care of x and y velocity
         self.jump_speed = -12
         self.gravity = 0.8
+        self.dash_direction = 3
 
         # status
         self.status = 'idle'
         self.facing_right = False
         self.on_ground = True
         self.on_ceiling = False
+        self.is_dashing = False
 
         # atts
         self.max_health = 10
@@ -49,6 +51,14 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_SPACE] and self.on_ground:
             self.jump()
+
+
+        if keys[pygame.K_LCTRL]:
+            if self.facing_right:
+                self.direction.x = 3
+            else:
+                self.direction.x = -3
+
 
     def animate(self):
         #image = pygame.image.load('./Graphics/player/idle/idle_0.png').convert_alpha()
@@ -84,15 +94,20 @@ class Player(pygame.sprite.Sprite):
             print('fall')
         else:
             # This else branch checks whether we are walking right, left, or idle
-            if int(self.direction.x) > 0:
+            if int(self.direction.x) == self.dash_direction or self.direction.x == self.dash_direction * -1: # This will keep track of character dashing movement
+                self.is_dashing = True
+            elif int(self.direction.x) > 0:
                 self.status = 'walk'
                 self.sprite_speed = 0.2
+                self.is_dashing = False
             elif int(self.direction.x) < 0:
                 self.status = 'walk'
                 self.sprite_speed = 0.2
+                self.is_dashing = False
             elif int(self.direction.x) == 0:
                 self.status = 'idle'
                 self.sprite_speed = 0.1
+                self.is_dashing = False
 
     # Create 2 rects to display player health bar
     def display_health(self):

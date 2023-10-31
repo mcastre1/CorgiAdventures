@@ -143,11 +143,18 @@ class Level():
         player = self.player_sprite.sprite
         player_x = player.rect.centerx
 
+        # Temp world shift variable for dashing,
+        # If dashing we incerement the speed at which the scroll x happens
+        # to keep up with character movement.
+        temp_world_shift = 5
+        if player.is_dashing:
+            temp_world_shift = 15
+
         if player_x < (screen_width * .33) and player.direction.x < 0:
-            self.world_shift = 5
+            self.world_shift = temp_world_shift
             player.speed = 0
         elif player_x > (screen_width * .66) and player.direction.x > 0:
-            self.world_shift = -5
+            self.world_shift = -1 * temp_world_shift
             player.speed = 0
         else:
             self.world_shift = 0

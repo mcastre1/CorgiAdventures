@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level0/blue_sky_gradient.tsx",
+    "activeFile": "level0/level0.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -61,10 +61,10 @@
         },
         "level0/level0.tmx": {
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 444,
-                "y": 187
+                "x": 1092,
+                "y": 215
             }
         },
         "level0/player_tile.tsx": {
@@ -73,7 +73,9 @@
             "scaleInEditor": 1
         },
         "level0/small_bush.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "level0/terrain_grass_tiles.tsx": {
             "scaleInDock": 3,
@@ -94,15 +96,17 @@
         "level0/32terrain_grass_tiles.tsx",
         "level0/grass_deco_tiles.tsx",
         "level0/player_tile.tsx",
-        "level0/blue_sky_gradient.tsx"
+        "level0/blue_sky_gradient.tsx",
+        "level0/small_bush.tsx"
     ],
     "project": "level0.tiled-project",
     "recentFiles": [
-        "level0/level0.tmx",
-        "level0/32terrain_grass_tiles.tsx",
-        "level0/grass_deco_tiles.tsx",
-        "level0/player_tile.tsx",
+        "level0/small_bush.tsx",
         "level0/blue_sky_gradient.tsx",
+        "level0/player_tile.tsx",
+        "level0/grass_deco_tiles.tsx",
+        "level0/32terrain_grass_tiles.tsx",
+        "level0/level0.tmx",
         "level0/terrain_grass_tiles.tsx",
         "C:/Users/Miguel/Desktop/PygamePlatformer/levels/level_data/level_0.tmx",
         "level0.tmx"
