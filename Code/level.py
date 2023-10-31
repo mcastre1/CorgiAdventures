@@ -130,6 +130,9 @@ class Level():
         player = self.player_sprite.sprite
         player.rect.x += player.direction.x * player.speed
 
+        if player.is_dashing:
+            player.rect.x += player.direction.x * 5
+
         # collisions
         collidable_sprites = self.terrain_sprites.sprites()
         for sprite in collidable_sprites:
@@ -148,7 +151,7 @@ class Level():
         # to keep up with character movement.
         temp_world_shift = 5
         if player.is_dashing:
-            temp_world_shift = 15
+            temp_world_shift = 30
 
         if player_x < (screen_width * .33) and player.direction.x < 0:
             self.world_shift = temp_world_shift

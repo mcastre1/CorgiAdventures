@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0,0) # This will take care of x and y velocity
         self.jump_speed = -12
         self.gravity = 0.8
-        self.dash_direction = 3
+        self.dash_direction = 6
 
         # status
         self.status = 'idle'
@@ -20,6 +20,10 @@ class Player(pygame.sprite.Sprite):
         self.on_ground = True
         self.on_ceiling = False
         self.is_dashing = False
+
+        # Cooldowns
+        self.dash_cooldown = 1000
+        self.last_dash = 0
 
         # atts
         self.max_health = 10
@@ -49,15 +53,22 @@ class Player(pygame.sprite.Sprite):
         else:
             self.direction.x = 0
 
+        # For jumping
         if keys[pygame.K_SPACE] and self.on_ground:
             self.jump()
 
-
+        # For dashing
         if keys[pygame.K_LCTRL]:
-            if self.facing_right:
-                self.direction.x = 3
-            else:
-                self.direction.x = -3
+            current_time = pygame.time.get_ticks()
+            print(f'{current_time} , {self.last_dash}, {current_time - self.last_dash}')
+            if current_time - self.last_dash > 1000:
+                # if self.facing_right:
+                #     self.direction.x = 3
+                # else:
+                #     self.direction.x = -3
+                
+                self.dash()
+                self.last_dash = pygame.time.get_ticks()
 
 
     def animate(self):
@@ -74,6 +85,12 @@ class Player(pygame.sprite.Sprite):
         else:
             flipped_image = pygame.transform.flip(image, True, False)
             self.image = flipped_image
+
+    def dash(self):
+        if self.facing_right:
+            self.direction.x = self.dash_direction
+        else:
+            self.direction.x = -self.dash_direction
 
     def jump(self):
         self.direction.y = self.jump_speed
@@ -96,6 +113,7 @@ class Player(pygame.sprite.Sprite):
             # This else branch checks whether we are walking right, left, or idle
             if int(self.direction.x) == self.dash_direction or self.direction.x == self.dash_direction * -1: # This will keep track of character dashing movement
                 self.is_dashing = True
+                print("dash")
             elif int(self.direction.x) > 0:
                 self.status = 'walk'
                 self.sprite_speed = 0.2
@@ -121,7 +139,6 @@ class Player(pygame.sprite.Sprite):
         # Draw both rectangles to the passed in display surface
         pygame.draw.rect(self.display_surface, 'black', max_rect, 2, 3)
         pygame.draw.rect(self.display_surface, (198, 47, 39), current_rect, 0, 2)
-
 
     def update(self, shift):
         self.input()
