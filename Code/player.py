@@ -140,9 +140,22 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(self.display_surface, 'black', max_rect, 2, 3)
         pygame.draw.rect(self.display_surface, (198, 47, 39), current_rect, 0, 2)
 
+    def display_cds(self):
+        # Dash
+        dash_cd = pygame.Rect(1, 22, 100, 10)
+        current_percentage = (pygame.time.get_ticks()-self.last_dash)/self.dash_cooldown
+        if current_percentage >= 1:
+            current_percentage = 1
+
+        current_rect = pygame.Rect(3, 24, (dash_cd.width*current_percentage), 7)
+
+        pygame.draw.rect(self.display_surface, 'black', dash_cd, 2, 2)
+        pygame.draw.rect(self.display_surface, (198, 47, 39), current_rect, 0, 1)
+
     def update(self, shift):
         self.input()
         self.get_status()
         self.animate()
         self.display_health()
+        self.display_cds()
 
