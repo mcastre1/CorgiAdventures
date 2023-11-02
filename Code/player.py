@@ -86,6 +86,9 @@ class Player(pygame.sprite.Sprite):
             flipped_image = pygame.transform.flip(image, True, False)
             self.image = flipped_image
 
+        if self.status == 'walk':
+            print('dust!')
+
     def dash(self):
         if self.facing_right:
             self.direction.x = self.dash_direction

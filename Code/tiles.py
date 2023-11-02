@@ -18,3 +18,10 @@ class Cloud(StaticTile):
     def __init__(self, size, x, y, surface):
         super().__init__(size, x, y, surface)
         self.iamge = surface
+
+class dust(StaticTile):
+    def __init__(self, size, x, y, surface, path):
+        super().__init__(size, x, y, surface)
+        self.path = path
+
+        
