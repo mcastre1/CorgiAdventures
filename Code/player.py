@@ -89,7 +89,7 @@ class Player(pygame.sprite.Sprite):
             flipped_image = pygame.transform.flip(image, True, False)
             self.image = flipped_image
 
-        if self.status == 'walk':
+        if self.on_ground and self.status == 'walk':
             self.add_particle((self.rect.x, self.rect.y))
 
 
