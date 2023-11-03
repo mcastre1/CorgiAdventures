@@ -1,7 +1,7 @@
 import pygame
 from support import import_csv_layout, import_cut_tileset
 from settings import tile_size, screen_width, screen_height
-from tiles import StaticTile, Cloud
+from tiles import StaticTile, Cloud, Dust
 from player import Player
 from game_data import level_0
 from random import choice, randint
@@ -35,6 +35,9 @@ class Level():
         self.player_sprite = pygame.sprite.GroupSingle()
         self.player_setup(player_layout)
 
+        # Particles
+        self.particles = pygame.sprite.Group()
+
         # Clouds
         self.level_width_pixels = len(terrain_layout[0]) * tile_size
         self.number_clouds = 10
@@ -44,6 +47,11 @@ class Level():
         print(self.cloud_group)
 
         self.run()
+
+    def add_particle(self, pos):
+        print(f"Added particle at {pos}")
+        self.particles.add(Dust(4, pos[0], pos[1], surface=None, path="./Graphics/player/dust_particles/running.png", over_size=4))
+
 
     def generate_clouds(self):
         group = pygame.sprite.Group()
@@ -63,7 +71,7 @@ class Level():
                 x = col_index * tile_size
 
                 if id == '0':
-                    self.player_sprite.add(Player((x, y), self.display_surface))
+                    self.player_sprite.add(Player((x, y), self.display_surface, self.add_particle))
 
 
     def create_sprite_group(self, layout, type):
@@ -129,6 +137,8 @@ class Level():
         # Movement
         player = self.player_sprite.sprite
         player.rect.x += player.direction.x * player.speed
+        if player.on_ground and player.is_dashing == False and player.direction.x:
+            print("add dust")
 
         if player.is_dashing:
             player.rect.x += player.direction.x * 5
@@ -191,10 +201,13 @@ class Level():
         self.player_sprite.update(self.world_shift)
         self.horizontal_movement_collision()
         self.vertical_movement_collisions()
-        
-
-        self.scroll_x()        
 
         self.player_sprite.draw(self.display_surface)
+        
+        self.particles.update(self.world_shift)
+        self.particles.draw(self.display_surface)
+        self.scroll_x()        
+
+        
 
 

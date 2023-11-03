@@ -2,8 +2,11 @@ import pygame
 from support import import_cut_tileset
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, display_surface):
+    def __init__(self, pos, display_surface, add_particle):
         super().__init__()
+
+        self.add_particle = add_particle
+
         self.display_surface = display_surface
         self.image = pygame.image.load('./Graphics/player/idle/idle_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = (pos))
@@ -87,7 +90,8 @@ class Player(pygame.sprite.Sprite):
             self.image = flipped_image
 
         if self.status == 'walk':
-            print('dust!')
+            self.add_particle((self.rect.x, self.rect.y))
+
 
     def dash(self):
         if self.facing_right:
