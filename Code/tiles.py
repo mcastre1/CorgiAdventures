@@ -38,6 +38,7 @@ class Dust(StaticTile):
 
     def update(self, shift):
         self.animate()
+        self.rect.x += shift
 
 
 
