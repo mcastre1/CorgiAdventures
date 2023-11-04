@@ -1,7 +1,8 @@
 import pygame
 from support import import_csv_layout, import_cut_tileset
 from settings import tile_size, screen_width, screen_height
-from tiles import StaticTile, Cloud, Dust
+from tiles import StaticTile, Cloud
+from particles import Dust
 from player import Player
 from game_data import level_0
 from random import choice, randint
@@ -44,12 +45,10 @@ class Level():
         self.cloud_sprites = [pygame.image.load('./Graphics/decoration/clouds/small.png'),
                               pygame.image.load('./Graphics/decoration/clouds/big.png')]
         self.cloud_group = self.generate_clouds()
-        print(self.cloud_group)
 
         self.run()
 
     def add_particle(self, pos):
-        print(f"Added particle at {pos}")
         self.particles.add(Dust(4, pos[0], pos[1], surface=None, path="./Graphics/player/dust_particles/running.png", over_size=4))
 
 
@@ -137,9 +136,7 @@ class Level():
         # Movement
         player = self.player_sprite.sprite
         player.rect.x += player.direction.x * player.speed
-        if player.on_ground and player.is_dashing == False and player.direction.x:
-            print("add dust")
-
+        
         if player.is_dashing:
             player.rect.x += player.direction.x * 5
 
