@@ -28,6 +28,9 @@ class Player(pygame.sprite.Sprite):
         self.dash_cooldown = 1000
         self.last_dash = 0
 
+        self.walking_dust_cd = 100
+        self.last_walk_dust = 0
+
         # atts
         self.max_health = 10
         self.current_health = 10
@@ -63,13 +66,8 @@ class Player(pygame.sprite.Sprite):
         # For dashing
         if keys[pygame.K_LCTRL]:
             current_time = pygame.time.get_ticks()
-            print(f'{current_time} , {self.last_dash}, {current_time - self.last_dash}')
-            if current_time - self.last_dash > 1000:
-                # if self.facing_right:
-                #     self.direction.x = 3
-                # else:
-                #     self.direction.x = -3
-                
+          
+            if current_time - self.last_dash > self.dash_cooldown:
                 self.dash()
                 self.last_dash = pygame.time.get_ticks()
 
@@ -90,7 +88,14 @@ class Player(pygame.sprite.Sprite):
             self.image = flipped_image
 
         if self.on_ground and self.status == 'walk':
-            self.add_particle((self.rect.x, self.rect.y))
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_walk_dust >= self.walking_dust_cd:
+                if self.facing_right:
+                    self.add_particle((self.rect.bottomleft[0], self.rect.bottomleft[1]-3))
+                else:
+                    self.add_particle((self.rect.bottomright[0], self.rect.bottomright[1]-3))
+
+                self.last_walk_dust = pygame.time.get_ticks()
 
 
     def dash(self):
