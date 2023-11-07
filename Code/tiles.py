@@ -1,6 +1,6 @@
 import pygame
 from support import import_cut_tileset_size
-
+import random
 class Tile(pygame.sprite.Sprite):
     def __init__(self, size, x, y):
         super().__init__()
@@ -19,6 +19,17 @@ class Cloud(StaticTile):
     def __init__(self, size, x, y, surface):
         super().__init__(size, x, y, surface)
         self.iamge = surface
+        self.last_move = pygame.time.get_ticks()
+        self.direction = random.choice([1,-1])
+
+    def update(self, shift):
+        if pygame.time.get_ticks() - self.last_move > 1000:
+            self.rect.x += self.direction * 1
+            self.last_move = pygame.time.get_ticks()
+
+        self.rect.x += shift
+
+
 
 class Dust(StaticTile):
     def __init__(self, size, x, y, surface, path, over_size):
